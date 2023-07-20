@@ -1,0 +1,55 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class RoundRobinScheduler {
+    private Queue<String> datingQueue;
+    private int[] datesCount;
+
+    public RoundRobinScheduler() {
+        datingQueue = new LinkedList<>();
+    }
+
+    public void addLadyFriend(String ladyFriend) {
+        datingQueue.add(ladyFriend);
+    }
+
+    public void generateSchedule() {
+        int numLadyFriends = datingQueue.size();
+        int numDatesPerFriend = 2;
+
+        datesCount = new int[numLadyFriends];
+        int totalDates = numLadyFriends * numDatesPerFriend;
+
+        int index = 0;
+        while (totalDates > 0) {
+            String currentLadyFriend = datingQueue.poll();
+            datesCount[index]++;
+            datingQueue.add(currentLadyFriend);
+
+            totalDates--;
+            index = (index + 1) % numLadyFriends;
+        }
+    }
+
+    public void printDatesCount() {
+        int index = 0;
+        for (String friend : datingQueue) {
+            System.out.println(friend + " had " + datesCount[index] + " dates.");
+            index++;
+        }
+    }
+
+    public static void main(String[] args) {
+        RoundRobinScheduler scheduler = new RoundRobinScheduler();
+
+        scheduler.addLadyFriend("Friend 1");
+        scheduler.addLadyFriend("Friend 2");
+        scheduler.addLadyFriend("Friend 3");
+        scheduler.addLadyFriend("Friend 4");
+        scheduler.addLadyFriend("Friend 5");
+
+        scheduler.generateSchedule();
+
+        scheduler.printDatesCount();
+    }
+}
