@@ -14,13 +14,11 @@ class Student {
     String name;
     int id;
     int grade;
-    Node prev;
 
     public Student(String name, int id, int grade) {
         this.name = name;
         this.id = id;
         this.grade = grade;
-        this.prev = null;
     }
 }
 
@@ -41,7 +39,7 @@ class LinkedList {
         }
     }
 
-    public void displayStudents() {
+    public void displayStudentsForward() {
         Node current = head;
         while (current != null) {
             Student student = current.data;
@@ -50,6 +48,22 @@ class LinkedList {
             System.out.println("Grade: " + student.grade);
             System.out.println("----------------------");
             current = current.next;
+        }
+    }
+
+    public void displayStudentsBackward() {
+        Node current = head;
+        while (current != null && current.next != null) {
+            current = current.next;
+        }
+
+        while (current != null) {
+            Student student = current.data;
+            System.out.println("Name: " + student.name);
+            System.out.println("ID: " + student.id);
+            System.out.println("Grade: " + student.grade);
+            System.out.println("----------------------");
+            current = current.prev;
         }
     }
 }
@@ -66,6 +80,10 @@ public class Main {
         list.addStudent(student2);
         list.addStudent(student3);
 
-        list.displayStudents();
+        System.out.println("Forward Order:");
+        list.displayStudentsForward();
+
+        System.out.println("\nBackward Order:");
+        list.displayStudentsBackward();
     }
 }
