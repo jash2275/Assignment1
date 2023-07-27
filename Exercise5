@@ -4,6 +4,7 @@ import java.util.Queue;
 public class RoundRobinScheduler {
     private Queue<String> datingQueue;
     private int[] datesCount;
+    private int[] datesScheduled;
 
     public RoundRobinScheduler() {
         datingQueue = new LinkedList<>();
@@ -18,16 +19,30 @@ public class RoundRobinScheduler {
         int numDatesPerFriend = 2;
 
         datesCount = new int[numLadyFriends];
+        datesScheduled = new int[numLadyFriends];
+
         int totalDates = numLadyFriends * numDatesPerFriend;
+        int day = 1;
 
-        int index = 0;
         while (totalDates > 0) {
-            String currentLadyFriend = datingQueue.poll();
-            datesCount[index]++;
-            datingQueue.add(currentLadyFriend);
+            System.out.println("Day " + day + " Schedule:");
 
-            totalDates--;
-            index = (index + 1) % numLadyFriends;
+            int index = 0;
+            while (index < numLadyFriends) {
+                String currentLadyFriend = datingQueue.peek();
+                if (datesScheduled[index] < numDatesPerFriend) {
+                    System.out.println(currentLadyFriend + " is going on a date.");
+                    datesScheduled[index]++;
+                    datesCount[index]++;
+                    totalDates--;
+                } else {
+                    datingQueue.add(currentLadyFriend);
+                    datingQueue.poll();
+                }
+                index++;
+            }
+
+            day++;
         }
     }
 
@@ -50,6 +65,7 @@ public class RoundRobinScheduler {
 
         scheduler.generateSchedule();
 
+        System.out.println("\nFinal Dates Count:");
         scheduler.printDatesCount();
     }
 }
