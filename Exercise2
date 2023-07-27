@@ -10,6 +10,14 @@ class Book {
         this.author = author;
         this.isbn = isbn;
     }
+    
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
 }
 
 class BookStack {
@@ -38,13 +46,13 @@ class BookStack {
     public Book peek() {
         return stack.peek();
     }
-    
+
     public void reportBookTitles() {
         System.out.println("Titles of Books in the Stack:");
         Stack<Book> tempStack = new Stack<>();
         while (!stack.isEmpty()) {
             Book book = stack.pop();
-            System.out.println(book.title);
+            System.out.println("Title: " + book.title + ", Author: " + book.author + ", ISBN: " + book.isbn);
             tempStack.push(book);
         }
         while (!tempStack.isEmpty()) {
@@ -56,8 +64,7 @@ class BookStack {
 public class Main {
     public static void main(String[] args) {
         BookStack bookStack = new BookStack();
-
-        // Adding 10 real books authored by J.K. Rowling to the stack
+        
         Book book1 = new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowling", "978-0439708180");
         Book book2 = new Book("Harry Potter and the Chamber of Secrets", "J.K. Rowling", "978-0439064866");
         Book book3 = new Book("Harry Potter and the Prisoner of Azkaban", "J.K. Rowling", "978-0439136365");
